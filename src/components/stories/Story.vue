@@ -8,6 +8,7 @@ import {computed, ref} from "vue";
 
   type Emits = {
     update: [Story]
+    remove: [number]
   }
 
   const props = defineProps<Props>();
@@ -24,8 +25,12 @@ import {computed, ref} from "vue";
   }
 
   function save() {
-    emit("update", {title: props.story.title, date: props.story.date, content: updatedValue});
+    emit("update", {...props.story, content: updatedValue});
     editMode.value = false
+  }
+
+  function remove() {
+    emit("remove", props.story.id!);
   }
 
 
@@ -35,7 +40,11 @@ import {computed, ref} from "vue";
 <template>
   <div class="story" @dblclick="toggle">
     <div class="story-header">
-      <h3>{{props.story.title}}</h3> <button v-if="!editMode" @click="toggle">edit</button> <button v-else @click="save()">Save</button>
+      <h3>{{props.story.title}}</h3> <button v-if="!editMode" @click="toggle">edit</button>
+      <template v-else>
+        <button @click="remove">Remove</button>
+        <button @click="save()">Save</button>
+      </template>
     </div>
     <span class="story-date">{{date}}</span>
     <p class="story-content" v-if="!editMode">{{props.story.content || "This story has no content"}}</p>

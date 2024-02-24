@@ -1,32 +1,35 @@
 <script setup lang="ts">
-interface State {
-  stories: StoryModel[];
-}
-
-import { reactive, } from "vue";
   import {Story as StoryModel} from "../../models/story.ts";
   import Story from "./Story.vue";
+  import {useStoriesStore} from "../../store/stories.ts";
+  import {onMounted} from "vue";
 
-  const state = reactive<State>({
-    stories: []
-  });
+  const store = useStoriesStore();
+
+  onMounted(() => {
+    store.getAllStories()
+  })
+
 
   function addStory() {
-    state.stories.push({
-      date: new Date(),
-      title: `Advanture #${state.stories.length + 1}`,
-      content: 'Write something epic'
-    })
+    store.saveStory({
+      date:new Date(),
+      title: "Adventure #" + store.stories.length,
+      content: ""
+    });
   }
-  function updateStory(story: any, index: number) {
-    console.log(story.content);
-    state.stories.splice(index, 1, story);
+  function updateStory(story: StoryModel) {
+    store.updateStory(story);
+  }
+
+  function removeStory(id: number) {
+    store.removeStory(id);
   }
 </script>
 
 <template>
   <div class="wrapper">
-    <Story v-for="(st, index) in state.stories" :story="st" :key="st.date.getTime()" @update="updateStory($event, index)" />
+    <Story v-for="st in store.allStories" :story="st" :key="st.id" @update="updateStory" @remove="removeStory"/>
     <button @click="addStory">Add new Button</button>
   </div>
 </template>
