@@ -1,0 +1,24 @@
+.btn {
+  font-family: inherit;
+  padding: 0.8em 1.2em;
+  background-color: #22881c;
+  color: white;
+  border: none;
+  font-weight: bold;
+  font-size: 1em;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px 0 rgba(0,0,0,0.4);
+  line-height: 1;
+  transition: all 50ms;
+  &:hover, &:focus {
+    outline: none;
+    filter: brightness(110%);
+    cursor: pointer;
+    box-shadow: 0 1px 4px 1px rgba(0,0,0, 0.5);
+  }
+  &:active {
+    filter: brightness(85%);
+  }
+}

@@ -40,10 +40,10 @@ import {computed, ref} from "vue";
 <template>
   <div class="story" @dblclick="toggle">
     <div class="story-header">
-      <h3>{{props.story.title}}</h3> <button v-if="!editMode" @click="toggle">edit</button>
+      <h3>{{props.story.title}}</h3> <button v-if="!editMode" class="btn" @click="toggle">edit</button>
       <template v-else>
-        <button @click="remove">Remove</button>
-        <button @click="save()">Save</button>
+        <button class="btn" @click="remove">Remove</button>
+        <button class="btn" @click="save()">Save</button>
       </template>
     </div>
     <span class="story-date">{{date}}</span>

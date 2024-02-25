@@ -1,0 +1,7 @@
+@import "../absctracts";
+
+:root {
+  --primary-color: #{$sass-primary-color};
+  --body-color: #{$sass-body-color};
+  --text-color: #{$sass-text-color};
+}
