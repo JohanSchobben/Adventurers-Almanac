@@ -1,0 +1,9 @@
+$sass-body-color: #fff;
+$sass-text-color: #000;
+$sass-primary-color: #008002;
+
+
+$body-color: var(--body-color, $sass-body-color);
+$text-color: var(--text-color, $sass-text-color);
+$primary-color: var(--priamry-color, $sass-primary-color);
+

@@ -1,0 +1,9 @@
+@import "../absctracts";
+
+html, body, #app {
+  height: 100%;
+}
+
+html {
+  background-color: $body-color;
+}
