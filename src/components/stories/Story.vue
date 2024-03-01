@@ -14,7 +14,6 @@ import {computed, ref} from "vue";
   const props = defineProps<Props>();
   const emit = defineEmits<Emits>();
   const editMode = ref(false);
-  let updatedValue: string;
 
   const date = computed(() => {
     return new Intl.DateTimeFormat(undefined, {dateStyle: "full"}).format(props.story.date)
@@ -25,7 +24,7 @@ import {computed, ref} from "vue";
   }
 
   function save() {
-    emit("update", {...props.story, content: updatedValue});
+    emit("update", {...props.story});
     editMode.value = false
   }
 
@@ -40,7 +39,9 @@ import {computed, ref} from "vue";
 <template>
   <div class="story" @dblclick="toggle">
     <div class="story-header">
-      <h3>{{props.story.title}}</h3> <button v-if="!editMode" class="btn" @click="toggle">edit</button>
+      <h3 v-if="!editMode">{{props.story.title}}</h3>
+      <input class="h3" v-if="editMode" type="text" v-model="props.story.title">
+      <button v-if="!editMode" class="btn" @click="toggle">edit</button>
       <template v-else>
         <button class="btn" @click="remove">Remove</button>
         <button class="btn" @click="save()">Save</button>
@@ -48,7 +49,11 @@ import {computed, ref} from "vue";
     </div>
     <span class="story-date">{{date}}</span>
     <p class="story-content" v-if="!editMode">{{props.story.content || "This story has no content"}}</p>
-    <textarea @input="event => updatedValue = event.target?.value" class="story-input" v-else @keydown.esc="toggle" :value="props.story.content"></textarea>
+    <textarea
+        v-else
+        v-model="props.story.content"
+        class="story-input"
+        @keydown.esc="toggle"></textarea>
   </div>
 
 </template>
@@ -74,9 +79,11 @@ import {computed, ref} from "vue";
   }
 }
 
-h3 {
-  font-size: 4rem;
+h3, .h3 {
+  font-size: 2rem;
   font-weight: normal;
   line-height: 1;
+  border: none;
+  letter-spacing: 1px;
 }
 </style>
