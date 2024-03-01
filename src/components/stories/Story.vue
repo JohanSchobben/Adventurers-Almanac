@@ -41,8 +41,7 @@ import {computed, ref} from "vue";
     <div class="story-header">
       <h3 v-if="!editMode">{{props.story.title}}</h3>
       <input class="h3" v-if="editMode" type="text" v-model="props.story.title">
-      <button v-if="!editMode" class="btn" @click="toggle">edit</button>
-      <template v-else>
+      <button v-if="!editMode" class="btn" @click="toggle">edit</button><template v-else>
         <button class="btn" @click="remove">Remove</button>
         <button class="btn" @click="save()">Save</button>
       </template>
