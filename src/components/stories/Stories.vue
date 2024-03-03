@@ -12,11 +12,11 @@
 
 
   function addStory() {
-    store.saveStory({
-      date:new Date(),
-      title: "Adventure #" + store.stories.length,
-      content: ""
-    });
+    // store.saveStory({
+    //   date:new Date(),
+    //   title: "Adventure #" + store.stories.length,
+    //   content: ""
+    // });
   }
   function updateStory(story: StoryModel) {
     store.updateStory(story);

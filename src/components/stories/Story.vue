@@ -2,7 +2,7 @@
 import {computed, ref} from "vue";
   import {Story} from "../../models/story.ts";
 
-  interface Props {
+  type Props = {
     story: Story
   }
 
@@ -32,8 +32,9 @@ import {computed, ref} from "vue";
     emit("remove", props.story.id!);
   }
 
-
-
+  function onSelectionChange(event: MouseEvent) {
+    console.log(event);
+  }
 </script>
 
 <template>
@@ -47,7 +48,7 @@ import {computed, ref} from "vue";
       </template>
     </div>
     <span class="story-date">{{date}}</span>
-    <p class="story-content" v-if="!editMode">{{props.story.content || "This story has no content"}}</p>
+    <p v-selection-change @foo="onSelectionChange" class="story-content" v-if="!editMode">{{props.story.content || "This story has no content"}}</p>
     <textarea
         v-else
         v-model="props.story.content"
