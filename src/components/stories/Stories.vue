@@ -12,11 +12,11 @@
 
 
   function addStory() {
-    // store.saveStory({
-    //   date:new Date(),
-    //   title: "Adventure #" + store.stories.length,
-    //   content: ""
-    // });
+    store.saveStory({
+      date:new Date(),
+      title: "Adventure #" + (store.stories.length + 1),
+      content: ""
+    });
   }
   function updateStory(story: StoryModel) {
     store.updateStory(story);
@@ -25,11 +25,20 @@
   function removeStory(id: number) {
     store.removeStory(id);
   }
+
+  function onAddCharacter(name: string) {
+    console.log("adding " + name);
+  }
 </script>
 
 <template>
   <div class="wrapper">
-    <Story v-for="st in store.allStories" :story="st" :key="st.id" @update="updateStory" @remove="removeStory"/>
+    <Story v-for="st in store.allStories"
+           :story="st"
+           :key="st.id"
+           @addCharacter="onAddCharacter"
+           @update="updateStory"
+           @remove="removeStory"/>
     <button class="btn" @click="addStory">Add new Button</button>
   </div>
 </template>

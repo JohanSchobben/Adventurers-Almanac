@@ -17,8 +17,8 @@ export const emit = (eventName: string, ...args: any[]) => {
 }
 
 export const off = (id: string) => {
-    for (const key in Object.keys(listeners)) {
-        if (listeners[key].hasOwnProperty(id)) continue;
+    for (const key of Object.keys(listeners)) {
+        if (!listeners[key].hasOwnProperty(id)) continue;
         delete listeners[key][id];
         break;
     }

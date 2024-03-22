@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import {computed, ref} from "vue";
   import {Story} from "../../models/story.ts";
+import StoryText from "./StoryText.vue";
 
   type Props = {
     story: Story
@@ -9,6 +10,8 @@ import {computed, ref} from "vue";
   type Emits = {
     update: [Story]
     remove: [number]
+    addCharacter: [string]
+
   }
 
   const props = defineProps<Props>();
@@ -32,13 +35,11 @@ import {computed, ref} from "vue";
     emit("remove", props.story.id!);
   }
 
-  function onSelectionChange(event: MouseEvent) {
-    console.log(event);
-  }
+
 </script>
 
 <template>
-  <div class="story" @dblclick="toggle">
+  <div class="story">
     <div class="story-header">
       <h3 v-if="!editMode">{{props.story.title}}</h3>
       <input class="h3" v-if="editMode" type="text" v-model="props.story.title">
@@ -48,14 +49,16 @@ import {computed, ref} from "vue";
       </template>
     </div>
     <span class="story-date">{{date}}</span>
-    <p v-selection-change @foo="onSelectionChange" class="story-content" v-if="!editMode">{{props.story.content || "This story has no content"}}</p>
+    <StoryText
+        :text="props.story.content"
+        @addCharacter="emit('addCharacter', $event)"
+        v-if="!editMode"/>
     <textarea
         v-else
         v-model="props.story.content"
         class="story-input"
         @keydown.esc="toggle"></textarea>
   </div>
-
 </template>
 
 <style scoped>
@@ -64,6 +67,7 @@ import {computed, ref} from "vue";
   align-items: center;
   gap: 30px;
 }
+
 .story-input {
   resize: none;
   width: 100%;
