@@ -1,12 +1,12 @@
 export function debounce(debounceTime = 0 , callback: Function): Function {
     let timer: any;
 
-    return function() {
+    return function(...args: any[]) {
         if(debounceTime <= 0) {
-            callback();
+            callback.call(null, ...args)
             return;
         }
         clearTimeout(timer);
-        timer = setTimeout(() => callback(), debounceTime)
+        timer = setTimeout(() => {callback.call(null, ...callback.arguments)}, debounceTime)
     }
 }

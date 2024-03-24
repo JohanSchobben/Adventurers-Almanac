@@ -6,44 +6,71 @@ import {clamp} from "../../utils/maths.ts";
     close: [void]
   }
 
-  const state = reactive({x: 0, y: 0, isOpen: false});
+  type State = {
+    x: number;
+    y: number;
+    isOpen: boolean,
+    sizeUnit: "px" | "%",
+    dialogType: "popover" | "modal"
+  }
+
+  const state = reactive<State>({
+    x: 0,
+    y: 0,
+    isOpen: false,
+    sizeUnit: "px",
+    dialogType: "popover"
+  });
 
   const emit = defineEmits<Emits>();
-  const x = computed(() => `${state.x}px`);
+  const x = computed(() => `${state.x}${state.sizeUnit}`);
 
-  const y = computed(() => `${state.y}px`);
+  const y = computed(() => `${state.y}${state.sizeUnit}`);
 
-  function open(x: number, y: number) {
+  function openPopover(options: Pick<State, "x" | "y">) {
+    const {
+        x = 0,
+        y = 0
+    } = options
     if (state.isOpen) return;
-    console.log("open")
+    state.sizeUnit = "px";
     state.x = clamp(0, document.body.scrollWidth - 170, Math.round(x));
     state.y = clamp(0, document.body.scrollHeight - 100, Math.round(y + 4));
+    state.dialogType = "popover";
+    state.isOpen = true;
+  }
+
+  function openModal() {
+    state.sizeUnit = "%";
+    state.x = 50;
+    state.y = 50;
+    state.dialogType = "modal"
     state.isOpen = true;
   }
 
   function close() {
-    console.log("close");
     state.isOpen = false;
     emit("close");
   }
 
   defineExpose({
-    open
+    openPopover,
+    openModal
   })
 
 </script>
 
 <template>
     <Teleport to="body">
-      <div v-if="state.isOpen" class="backdrop" @click="close">
-        <div class="overlay" @click.stop>
-          <slot/>
+      <div v-if="state.isOpen" class="backdrop" :class="{'backdrop-modal': state.dialogType === 'modal'}" @click="close">
+        <div class="overlay" :class="{'overlay-modal': state.dialogType === 'modal'}" @click.stop>
+          <slot :close="close" />
         </div>
       </div>
     </Teleport>
 </template>
 
-<style scoped>
+<style scoped lang="scss">
   .backdrop {
     position: absolute;
     top: 0;
@@ -53,12 +80,17 @@ import {clamp} from "../../utils/maths.ts";
     background-color: transparent;
     z-index: 50;
     pointer-events: all;
-
+    &-modal {
+      background-color: rgba(0, 0, 0, 0.3);
+    }
   }
   .overlay {
     position: absolute;
     top: v-bind(y);
     left: v-bind(x);
     z-index: 100;
+    &-modal {
+      transform: translate(-50%);
+    }
   }
 </style>

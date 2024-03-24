@@ -19,7 +19,7 @@
 
   function onSelectionChange(event: CustomEvent) {
     name = event.detail.text;
-    actionsDialog.value!.open(event.detail.x, event.detail.y);
+    actionsDialog.value!.openPopover({x: event.detail.x, y: event.detail.y});
   }
 
   function addCharacterClick() {
@@ -33,8 +33,8 @@
      @selectionupdate="onSelectionChange"
      :class="{'no-text': hasNoContent}"
      class="story-content">{{props.text || "This story has no content"}}</p>
-  <Dialog ref="actionsDialog">
-    <button class="btn" @click="addCharacterClick">Add character</button>
+  <Dialog ref="actionsDialog" v-slot="slotProps">
+    <button class="btn" @click="addCharacterClick(); slotProps.close()">Add character</button>
   </Dialog>
 
 </template>

@@ -4,7 +4,12 @@
   import {useStoriesStore} from "../../store/stories.ts";
   import {onMounted} from "vue";
 
+  type Events = {
+    addCharacter: [string]
+  }
+
   const store = useStoriesStore();
+  const emit = defineEmits<Events>();
 
   onMounted(() => {
     store.getAllStories()
@@ -27,7 +32,7 @@
   }
 
   function onAddCharacter(name: string) {
-    console.log("adding " + name);
+    emit("addCharacter", name)
   }
 </script>
 
