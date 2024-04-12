@@ -1,9 +1,9 @@
 const databaseName = "adventurer";
-const databaseVersion = 1;
+const databaseVersion = 2;
 let db: Promise<IDBDatabase>;
 
 
-export type ObjectStoreName = "stories";
+export type ObjectStoreName = "stories" | "characters";
 
 db = new Promise((resolve, reject) => {
     const databaseOpenRequest: IDBOpenDBRequest = indexedDB.open(databaseName, databaseVersion);
@@ -15,11 +15,14 @@ db = new Promise((resolve, reject) => {
             reject(event);
         }
 
-        const objectStore = db.createObjectStore("stories", {autoIncrement: true, keyPath: "id"});
-        objectStore.createIndex("title", "title", {unique: false});
-
-        // resolve(db);
-
+        if (!db.objectStoreNames.contains("stories")) {
+            const objectStore = db.createObjectStore("stories", {autoIncrement: true, keyPath: "id"});
+            objectStore.createIndex("title", "title", {unique: false});
+        }
+        if (!db.objectStoreNames.contains("characters")) {
+            const objectStore = db.createObjectStore("characters", {autoIncrement: true, keyPath: "id"});
+            objectStore.createIndex("name", "name", {unique: true});
+        }
     }
 
     databaseOpenRequest.onsuccess = event => {

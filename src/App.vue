@@ -11,15 +11,17 @@
 
   const state = reactive<State>({name: ""})
   const characterDialog = ref(null);
-  function addCharacter(name: string) {
-    state.name = name;
+  function addCharacter() {
     characterDialog.value!.openModal();
   }
 
 </script>
 <template>
+  <button class="btn add-character-btn" @click="addCharacter">
+    +
+  </button>
   <div class="main-area">
-    <Stories @addCharacter="addCharacter" />
+    <Stories />
   </div>
   <Dialog ref="characterDialog">
     <CharacterCreation :name="state.name"/>
@@ -34,5 +36,11 @@
     width: 100%;
     margin-left: auto;
     margin-right: auto;
+  }
+
+  .add-character-btn {
+    position: fixed;
+    top: 32px;
+    right: 32px;
   }
 </style>

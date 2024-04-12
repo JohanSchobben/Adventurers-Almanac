@@ -44,7 +44,7 @@
            @addCharacter="onAddCharacter"
            @update="updateStory"
            @remove="removeStory"/>
-    <button class="btn" @click="addStory">Add new Button</button>
+    <button class="btn" @click="addStory">Add new chapter</button>
   </div>
 </template>
 

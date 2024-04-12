@@ -46,10 +46,12 @@ import {clamp} from "../../utils/maths.ts";
     state.y = 50;
     state.dialogType = "modal"
     state.isOpen = true;
+    document.body.classList.add("noscroll");
   }
 
   function close() {
     state.isOpen = false;
+    document.body.classList.remove("noscroll");
     emit("close");
   }
 
@@ -72,7 +74,7 @@ import {clamp} from "../../utils/maths.ts";
 
 <style scoped lang="scss">
   .backdrop {
-    position: absolute;
+    position: fixed;
     top: 0;
     right: 0;
     left: 0;
@@ -90,7 +92,8 @@ import {clamp} from "../../utils/maths.ts";
     left: v-bind(x);
     z-index: 100;
     &-modal {
-      transform: translate(-50%);
+      transform: translate(-50%, -50%);
+      background-color: #fff;
     }
   }
 </style>
