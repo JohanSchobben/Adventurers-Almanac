@@ -13,7 +13,7 @@
 
   const name = ref<string>("");
   const race = ref<string>("human");
-  const dndClass = ref<string>("");
+  const dndClass = ref<string>("barbarian");
   const description = ref<string>("");
   const alignment = ref<string>("");
   const dead = ref<boolean>(false);
