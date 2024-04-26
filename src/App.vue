@@ -23,8 +23,8 @@
   <div class="main-area">
     <Stories />
   </div>
-  <Dialog ref="characterDialog">
-    <CharacterCreation :name="state.name"/>
+  <Dialog ref="characterDialog" v-slot="slotProps">
+    <CharacterCreation :name="state.name" @close="slotProps.close()"/>
   </Dialog>
 </template>
 <style scoped>

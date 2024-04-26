@@ -23,7 +23,6 @@
   }
 
   function addCharacterClick() {
-    console.log("in text", name);
     emit("addCharacter", name);
   }
 
@@ -36,7 +35,6 @@
   <Dialog ref="actionsDialog" v-slot="slotProps">
     <button class="btn" @click="addCharacterClick(); slotProps.close()">Add character</button>
   </Dialog>
-
 </template>
 <style lang="scss" scoped>
   .no-text {

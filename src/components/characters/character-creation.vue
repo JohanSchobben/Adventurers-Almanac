@@ -1,6 +1,15 @@
 <script setup lang="ts">
 
   import {ref} from "vue";
+  import {Character} from "../../models/character.ts";
+  import {useCharacterStore} from "../../store/characters.ts";
+
+  type Emits = {
+    close: [void];
+  }
+
+  const store = useCharacterStore();
+  const emit = defineEmits<Emits>();
 
   const name = ref<string>("");
   const race = ref<string>("human");
@@ -10,13 +19,29 @@
   const dead = ref<boolean>(false);
   const relevant = ref<boolean>(true);
 
+  function saveData(event: Event) {
+    event.preventDefault();
+    const data: Character = {
+      name: name.value,
+      class: dndClass.value,
+      race: race.value,
+      description: description.value,
+      alignment: alignment.value,
+      dead: dead.value,
+      relevant: relevant.value
+    };
+    store.saveCharacter(data)
+        .then(() => {
+          emit("close");
+        })
+  }
 </script>
 
 <template>
 <div class="dialog">
   <h2 class="dialog--title">Create new character</h2>
   <div class="dialog--content">
-    <form id="character-form">
+    <form id="character-form" @submit="saveData">
       <div>
         <label for="name">Name</label>
         <input id="name" v-model="name">
