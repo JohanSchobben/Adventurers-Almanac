@@ -17,15 +17,9 @@
 
 </script>
 <template>
-  <button class="btn add-character-btn" @click="addCharacter">
-    +
-  </button>
-  <div class="main-area">
-    <Stories />
-  </div>
-  <Dialog ref="characterDialog" v-slot="slotProps">
-    <CharacterCreation :name="state.name" @close="slotProps.close()"/>
-  </Dialog>
+  <RouterLink to="/">home</RouterLink>
+  <RouterLink to="/characters">characters</RouterLink>
+  <RouterView/>
 </template>
 <style scoped>
   .main-area {
