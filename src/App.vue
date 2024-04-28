@@ -1,9 +1,7 @@
 <script setup lang="ts">
 
-  import Stories from "./components/stories/Stories.vue";
-  import Dialog from "./components/shared/Dialog.vue";
-  import CharacterCreation from "./components/characters/character-creation.vue";
   import {reactive, ref} from "vue";
+  import Header from "./components/characters/Header.vue";
 
   type State = {
     name: string
@@ -17,9 +15,12 @@
 
 </script>
 <template>
-  <RouterLink to="/">home</RouterLink>
-  <RouterLink to="/characters">characters</RouterLink>
-  <RouterView/>
+  <div class="main-area">
+    <div class="header-section">
+      <Header companion-name="The hunt of Lord GlassStaff"/>
+    </div>
+    <RouterView />
+  </div>
 </template>
 <style scoped>
   .main-area {
@@ -30,6 +31,10 @@
     width: 100%;
     margin-left: auto;
     margin-right: auto;
+  }
+
+  .header-section {
+    margin-bottom: 1rem;
   }
 
   .add-character-btn {
