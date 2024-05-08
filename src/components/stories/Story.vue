@@ -43,10 +43,13 @@ import StoryText from "./StoryText.vue";
     <div class="story-header">
       <h3 v-if="!editMode">{{props.story.title}}</h3>
       <input class="h3" v-if="editMode" type="text" v-model="props.story.title">
-      <button v-if="!editMode" class="btn" @click="toggle">edit</button><template v-else>
-        <button class="btn" @click="remove">Remove</button>
-        <button class="btn" @click="save()">Save</button>
-      </template>
+      <div class="story-header-actions">
+        <button v-if="!editMode" class="btn" @click="toggle">edit</button>
+        <template v-else>
+          <button class="btn" @click="remove">Remove</button>
+          <button class="btn" @click="save()">Save</button>
+        </template>
+      </div>
     </div>
     <span class="story-date">{{date}}</span>
     <StoryText
@@ -61,11 +64,14 @@ import StoryText from "./StoryText.vue";
   </div>
 </template>
 
-<style scoped>
+<style scoped lang="scss">
 .story-header {
   display: flex;
   align-items: center;
   gap: 30px;
+  &-actions {
+    margin-left: auto;
+  }
 }
 
 .story-input {
