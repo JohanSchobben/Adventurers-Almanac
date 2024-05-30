@@ -3,9 +3,9 @@
 </script>
 
 <template>
-  <p>
-    Character page
-  </p>
+  <div>
+
+  </div>
 </template>
 
 <style scoped>
